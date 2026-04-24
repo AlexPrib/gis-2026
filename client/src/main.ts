@@ -7,6 +7,7 @@ import OSM from 'ol/source/OSM';
 import ImageLayer from 'ol/layer/Image';
 import ImageWMS from 'ol/source/ImageWMS';
 import { fromLonLat } from 'ol/proj';
+import { apply } from 'ol-mapbox-style';
 
 const map = new Map({
   target: 'map',
@@ -47,3 +48,7 @@ const roadsLayer = new ImageLayer({
 
 map.addLayer(roadsLayer);
 map.addLayer(buildingsLayer);
+
+fetch('/mapbox-style.json')
+  .then((r) => r.json())
+  .then((style) => apply(map, style));
